@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+#define start cout << "-------------------------------" << endl;
+#define end cout << "-------------------------------" << endl << endl;
 char shift(char c, int key)
 {
     int x = tolower(c) - 'a';
@@ -11,7 +12,7 @@ char shift(char c, int key)
     {
         c = 'A' + x;
     }
-    else                                                    
+    else
     {
         c = 'a' + x;
     }
@@ -21,8 +22,7 @@ char shift(char c, int key)
 
 void encrypt()
 {
-    cout << "-------------------------------" << endl;
-
+    start;
     cout << "Plain text: ";
     string plainText;
     cin.ignore();
@@ -46,14 +46,12 @@ void encrypt()
 
     cout << "Key: " << key << endl;
     cout << "Cipher text: " << cipherText << endl;
-    cout << "-------------------------------" << endl
-         << endl;
+    end;
 }
 
 void decrypt()
 {
-    cout << "-------------------------------" << endl;
-
+    start;
     cout << "Cipher text: ";
     string cipherText;
     cin.ignore();
@@ -67,7 +65,7 @@ void decrypt()
     string plainText;
     for (char c : cipherText)
     {
-        if ((c >= 'a' && c <='z') || (c >= 'A' && c <= 'Z'))
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
         {
             plainText += shift(c, key);
         }
@@ -78,34 +76,31 @@ void decrypt()
     }
 
     cout << "Plain text: " << plainText << endl;
-    cout << "-------------------------------" << endl
-         << endl;
+    end;
 }
 
 void help()
 {
-    cout << "-------------------------------" << endl;
+    start;
     cout << "1.HELP" << endl;
     cout << "2.ENCRYPT" << endl;
     cout << "3.DECRYPT" << endl;
     cout << "4.EXIT" << endl;
-    cout << "-------------------------------" << endl
-         << endl;
+    end;
 }
 
 void error()
 {
-    cout << "-------------------------------" << endl;
+    start;
     cout << "Enter between 1-4:" << endl;
     help();
 }
 
 void exit()
 {
-    cout << "-------------------------------" << endl;
+    start;
     cout << "           **EXIT**            " << endl;
-    cout << "-------------------------------" << endl
-         << endl;
+    end;
 }
 int main()
 {
