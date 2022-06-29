@@ -1,23 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define start cout << "-------------------------------" << endl;
-#define end cout << "-------------------------------" << endl << endl;
-char shift(char c, int key)
+#define end cout << "-------------------------------" << endl \
+                 << endl;
+
+string shift(string text, int key)
 {
-    int x = tolower(c) - 'a';
-    x += key;
-    x %= 26;
-
-    if (isupper(c))
+    string shiftedText = "";
+    for (char &c : text)
     {
-        c = 'A' + x;
-    }
-    else
-    {
-        c = 'a' + x;
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+        {
+            int x = tolower(c) - 'a';
+            x += key;
+            x %= 26;
+
+            if (isupper(c))
+            {
+                shiftedText += 'A' + x;
+            }
+            else
+            {
+                shiftedText += 'a' + x;
+            }
+        }
+        else
+        {
+            shiftedText += c;
+        }
     }
 
-    return c;
+    return shiftedText;
 }
 
 void encrypt()
@@ -31,21 +44,10 @@ void encrypt()
     srand(time(0));
     int key = 1 + rand() % 25;
 
-    string cipherText = "";
-    for (char &c : plainText)
-    {
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-        {
-            cipherText += shift(c, key);
-        }
-        else
-        {
-            cipherText += c;
-        }
-    }
+    string cipherText = shift(plainText, key);
 
     cout << "Key: " << key << endl;
-    cout << "Cipher text: " << cipherText << endl;
+    cout << "Cipher text: " << shift(plainText, key) << endl;
     end;
 }
 
@@ -62,18 +64,7 @@ void decrypt()
     cin >> key;
     key = 26 - key;
 
-    string plainText;
-    for (char c : cipherText)
-    {
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-        {
-            plainText += shift(c, key);
-        }
-        else
-        {
-            plainText += c;
-        }
-    }
+    string plainText = shift(cipherText, key);
 
     cout << "Plain text: " << plainText << endl;
     end;
@@ -94,6 +85,7 @@ void error()
     start;
     cout << "Enter between 1-4:" << endl;
     help();
+    end;
 }
 
 void exit()
