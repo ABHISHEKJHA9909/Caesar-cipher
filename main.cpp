@@ -15,6 +15,7 @@ string shift(string text, int key)
             x += key;
             x %= 26;
 
+
             if (isupper(c))
             {
                 shiftedText += 'A' + x;
