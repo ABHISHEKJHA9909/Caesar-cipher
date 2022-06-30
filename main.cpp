@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include "btree.h"
 using namespace std;
 #define start cout << "-------------------------------" << endl;
 #define end cout << "-------------------------------" << endl \
@@ -14,7 +15,6 @@ string shift(string text, int key)
             int x = tolower(c) - 'a';
             x += key;
             x %= 26;
-
 
             if (isupper(c))
             {
@@ -52,6 +52,19 @@ void encrypt()
     end;
 }
 
+int matchCount(string s)
+{
+    stringstream ss(s);
+    string word;
+    int count = 0;
+    while (ss >> word)
+    {
+        if (search(bTreeNode, word))
+            count++;
+    }
+    return count;
+}
+
 void decrypt()
 {
     start;
@@ -60,14 +73,38 @@ void decrypt()
     cin.ignore();
     getline(cin, cipherText);
 
-    int key;
-    cout << "Key: ";
-    cin >> key;
-    key = 26 - key;
+    cout << "DO you have key(y/n)? ";
+    string userInput;
+    getline(cin, userInput);
+    if (userInput == "y")
+    {
+        int key;
+        cout << "Key: ";
+        cin >> key;
+        key = 26 - key;
 
-    string plainText = shift(cipherText, key);
+        string plainText = shift(cipherText, key);
 
-    cout << "Plain text: " << plainText << endl;
+        cout << "Plain text: " << plainText << endl;
+        end;
+    }
+    else
+    {
+        int currMax = matchCount(cipherText), currKey = 0;
+        for (int key = 1; key < 26; key++)
+        {
+
+            string plainText = shift(cipherText, key);
+            int count = matchCount(plainText);
+            if (count > currMax)
+            {
+                currMax = count;
+                currKey = key;
+            }
+        }
+        cout << shift(cipherText, currKey);
+        cout << endl;
+    }
     end;
 }
 
@@ -98,9 +135,11 @@ void exit()
 
 int main()
 {
+    createDict();
     help();
     while (true)
     {
+        cout<<"USER";
         string userInput;
         cin >> userInput;
         if (userInput == "1" || userInput == "help")
@@ -117,6 +156,7 @@ int main()
         }
         else if (userInput == "4")
         {
+            closeDict();
             exit();
             return 0;
         }

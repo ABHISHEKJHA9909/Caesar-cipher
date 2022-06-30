@@ -10,7 +10,10 @@ class node
 
 void insert(node *n,string s){
     node *curr=n;
+    for(char &c:s)c=tolower(c);
     for(char c:s){
+        if(c<'a' ||c>'z')
+            continue;
         if(curr->next[c-'a']==NULL){
             curr->next[c-'a']=new node();
         }
@@ -21,6 +24,7 @@ void insert(node *n,string s){
 
 bool search(node *n,string s){
     node *curr=n;
+    for(char &c:s)c=tolower(c);
     for(char c:s){
         if(curr->next[c-'a']==NULL){
             return false;
@@ -28,20 +32,21 @@ bool search(node *n,string s){
         else{
             curr=curr->next[c-'a'];
         }
-        curr->isend=true;
     }
-    return curr->isend;
+    return curr->isend==true;
 }
 
-int main(){
-    node *n=new node();
-    insert(n,"hello");
-    ifstream dict;
+ifstream dict;
+node *bTreeNode=new node();
+
+void  createDict(){
     dict.open("word.txt");
     string word;
-    node *n=new node();
     while(getline(dict,word)){
-        insert(n,word);
+        insert(bTreeNode,word);
     }
+}
+
+void closeDict(){
     dict.close();
 }
