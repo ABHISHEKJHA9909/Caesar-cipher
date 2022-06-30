@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #include "btree.h"
 using namespace std;
-#define start cout << "-------------------------------" << endl;
-#define end cout << "-------------------------------" << endl \
+#define start cout << "----------------------------------------------------------------------------------------------" << endl;
+#define end   cout << "----------------------------------------------------------------------------------------------" << endl \
                  << endl;
 
 string shift(string text, int key)
@@ -68,6 +68,7 @@ int matchCount(string s)
 void decrypt()
 {
     start;
+
     cout << "Cipher text: ";
     string cipherText;
     cin.ignore();
@@ -76,6 +77,7 @@ void decrypt()
     cout << "DO you have key(y/n)? ";
     string userInput;
     getline(cin, userInput);
+
     if (userInput == "y")
     {
         int key;
@@ -102,9 +104,11 @@ void decrypt()
                 currKey = key;
             }
         }
-        cout << shift(cipherText, currKey);
-        cout << endl;
+
+        string plainText = shift(cipherText, currKey);
+        cout << "Plain text: " << plainText << endl;
     }
+
     end;
 }
 
@@ -139,9 +143,9 @@ int main()
     help();
     while (true)
     {
-        cout<<"USER";
+        cout << "INPUT: ";
         string userInput;
-        cin >> userInput;
+        cin>>userInput;
         if (userInput == "1" || userInput == "help")
         {
             help();
